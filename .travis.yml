@@ -1,3 +1,7 @@
+notifications:
+  email:
+    - pham.van.khac@framgia.com
+
 language: android
 android:
   components:
