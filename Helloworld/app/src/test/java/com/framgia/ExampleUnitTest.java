@@ -1,4 +1,4 @@
-package com.example.framgia.helloworld;
+package com.framgia;
 
 import org.junit.Test;
 

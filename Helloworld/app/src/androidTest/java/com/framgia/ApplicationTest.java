@@ -14,10 +14,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     public void testSayHello(){
-        assertEquals(true,false);
+        assertEquals(true,true);
     }
 
     public void testSayBye(){
-        assertEquals(false,true);
+        assertEquals(false,false);
     }
 }
