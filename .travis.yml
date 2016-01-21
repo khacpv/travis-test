@@ -18,16 +18,23 @@ android:
 
 env:
   global:
-  # install timeout: 8 minutes
-  - ADB_INSTALL_TIMEOUT=8
+    # install timeout: 8 minutes
+    - ADB_INSTALL_TIMEOUT=8
+
+    # move to project before test
+    - PRJ_HOME="Helloworld"
 
 before_script: 
-  - cd Helloworld
+  - cd $PRJ_HOME
+
   - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
 script:
+  # unit test
   - ./gradlew test
-  - ./gradlew connectedAndroidTest
+
+  # instrusment test
+  - ./gradlew cAT
