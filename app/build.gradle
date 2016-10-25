@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+apply from: "../checkci.gradle"
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    applicationId "com.framgia"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode rootProject.ext.versionCode
+    versionName rootProject.ext.versionName
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  dexOptions {
+    // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
+    preDexLibraries = preDexEnabled && !travisBuild
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  Map<String, String> dependencies = rootProject.ext.dependencies;
+
+  androidTestCompile dependencies.supportAnnotations
+  androidTestCompile dependencies.testRunner
+  androidTestCompile dependencies.testRules
+  androidTestCompile dependencies.hamcrest
+  androidTestCompile dependencies.espresso
+  androidTestCompile dependencies.uiAutomator
+  testCompile dependencies.junit
+  testCompile dependencies.mockito
+
+  compile dependencies.playService
+  compile dependencies.appCompat
+}
